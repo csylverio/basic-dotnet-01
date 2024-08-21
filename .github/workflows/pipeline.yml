@@ -1,0 +1,16 @@
+name: CI
+
+on: 
+  push: 
+    branches:
+      - main
+
+jobs:
+  setup:
+    name: setup pipeline
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out repository code
+      uses: actions/checkout@v4
+    - name: Run command linux
+      run: echo "Hello GitHub Action"
