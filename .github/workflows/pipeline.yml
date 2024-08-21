@@ -10,7 +10,11 @@ jobs:
     name: setup pipeline
     runs-on: ubuntu-latest
     steps:
-    - name: Check out repository code
+    - name: Checkout code
       uses: actions/checkout@v4
+    - name: 
+      uses: actions/setup-dotnet@v4
+      with:
+        dotnet-version: 8.x
     - name: Run command linux
       run: echo "Hello GitHub Action"
