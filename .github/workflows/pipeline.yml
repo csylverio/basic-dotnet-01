@@ -10,11 +10,29 @@ jobs:
     name: setup pipeline
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
+    - name: Passo 1 - Baixar codigo
       uses: actions/checkout@v4
-    - name: Installing dotnet
+
+    - name: Passo 2 - Instalar .NET
       uses: actions/setup-dotnet@v4
       with:
         dotnet-version: 8.x
-    - name: Run command linux
-      run: echo "Hello GitHub Action"
+
+    - name: Passo 3 - Restaurar dependencias do projeto
+      run: dotnet restore
+
+    - name: Passo 4 - Compilar projeto
+      run: dotnet build --configuration Release
+
+    - name: Passo 5 - Publicando aplicando
+      run: dotnet publish -c Release -o /myapp
+
+    - name: Passo 5 - Deploy para o Azure Web App
+      uses: azure/webapps-deploy@v3
+      with:
+        app-name: "basic-dotnet-01"
+        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE  }}
+        package: /myapp
+
+    - name: Passo 6 - Comando linux
+      run: echo "Deploy GitHub Action com sucesso"
